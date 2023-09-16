@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Chat list</title>
+</head>
+<body>
+    <li th:each="room : ${chatList}">
+        <div class="cnt">${room.people}</div>
+        <div class="lastText">${room.message}</div>
+        <div class="textDate">${room.date}</div>
+        <div class="alarm">${room.alarm}</div>
+    </li>
+</body>
+</html>
