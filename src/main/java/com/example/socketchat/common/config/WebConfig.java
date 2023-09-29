@@ -9,6 +9,14 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         //프로필 이미지 url resource mapping
+        registry.addResourceHandler("/anne/img/profile/**")
+                .addResourceLocations("/Users/jaeryeongkim/Desktop/contents/img/profile");
+
+        registry.addResourceHandler("/anne/js/**")
+                .addResourceLocations("classpath:static/js/");
+
+        registry.addResourceHandler("/anne/css/**")
+                .addResourceLocations("classpath:static/css/");
 
     }
 }
