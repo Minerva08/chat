@@ -27,6 +27,7 @@ dependencies {
     implementation("org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.2")
     implementation ("org.springframework.boot:spring-boot-starter-websocket")
     implementation("org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:1.16")
+    implementation("org.projectlombok:lombok")
 
 
     implementation ("org.webjars:webjars-locator-core:0.47")
