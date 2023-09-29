@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.socketchat.domain.ChatRoomDao">
+
+    <insert id="insertChatRoom" parameterType="chatRoom">
+        INSERT INTO chat_room
+        (room_id,room_name) VALUES (#{roomId},#{roomName})
+    </insert>
+
+    <select id="getChatRooms" resultType="com.example.socketchat.common.dto.ChatRoom">
+        SELECT room_id AS roomId
+        ,room_name AS name
+        FROM chat_room
+    </select>
+
+</mapper>

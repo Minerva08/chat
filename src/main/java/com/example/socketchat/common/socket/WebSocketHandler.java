@@ -21,10 +21,11 @@ public class WebSocketHandler extends TextWebSocketHandler {
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
         String payload = message.getPayload();
-        log.info("{}", payload);
+        log.info("socket Request : {}", payload);
         ChatMessage chatMessage = objectMapper.readValue(payload, ChatMessage.class);
 
         ChatRoom chatRoom = socketService.findRoomById(chatMessage.getRoomId());
+        log.info("chatRoom info : {}",chatRoom.toString());
         chatRoom.handlerActions(session, chatMessage, socketService);
     }
 }

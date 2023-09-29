@@ -2,6 +2,7 @@ package com.example.socketchat.common.socket.controller;
 
 import com.example.socketchat.common.dto.ChatRoom;
 import com.example.socketchat.common.socket.service.SocketService;
+import com.example.socketchat.dto.ChatRoomInfo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,8 +19,8 @@ public class SocketController {
     private final SocketService chatService;
 
     @PostMapping("/socket-join")
-    public ChatRoom createRoom(@RequestBody String name) {
-        return chatService.createRoom(name);
+    public ChatRoom createRoom(@RequestBody ChatRoomInfo info) {
+        return chatService.createRoom(info.getRoomName());
     }
 
     @GetMapping("/socket-con-list")

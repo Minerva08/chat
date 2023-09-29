@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.socketchat.domain.ChatRoomMapUserDao">
+    <insert id="insertRoomByUser" parameterType="com.example.socketchat.dto.ChatRoomMapUser">
+        INSERT INTO user_map_room
+        (room_id,user_id) VALUES (#{roomId},#{userId})
+    </insert>
+
+    <delete id="deleteRoomByUser" parameterType="com.example.socketchat.dto.ChatRoomMapUser">
+        DELETE FROM user_map_room
+        WHERE room_id=#{roomId} and user_id = #{userId}
+    </delete>
+
+    <select id="getchatListByUser" resultType="com.example.socketchat.dto.ChatRoomMapUser">
+        SELECT cr.room_name as roomName
+        , umr.room_id as roomId
+        , umr.user_id as userId
+        FROM user_map_room umr
+        INNER JOIN chat_room cr on umr.room_id = cr.room_id
+        WHERE umr.user_id=#{userId}
+    </select>
+</mapper>
