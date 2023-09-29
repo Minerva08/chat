@@ -24,8 +24,15 @@ repositories {
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
     implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation("org.mybatis:mybatis-spring:2.0.6")
+    implementation("org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.2")
     implementation ("org.springframework.boot:spring-boot-starter-websocket")
+    implementation("org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:1.16")
+
+
+    implementation ("org.webjars:webjars-locator-core:0.47")
+    implementation("org.webjars.bower:bootstrap:4.5.3")
+    implementation("org.webjars.bower:jquery:3.6.0")
+
 
     compileOnly("org.projectlombok:lombok")
     runtimeOnly("com.mysql:mysql-connector-j")
