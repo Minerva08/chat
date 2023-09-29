@@ -1,10 +1,8 @@
-name: Spring Boot & Gradle CI/CD 
+name: Java CI with Gradle
 
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    branches: [ "main" , "gitAction" ]
 
 permissions:
   contents: read
@@ -21,8 +19,10 @@ jobs:
       with:
         java-version: '11'
         distribution: 'temurin'
+
+
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
-    - name: Build with Gradle
-      run: ./gradlew clean build -x test
 
+    - name: Build with Gradle
+      run: ./gradlew build -x test
