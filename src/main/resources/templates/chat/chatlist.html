@@ -3,13 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title>Chat list</title>
+    <script type="text/javascript" th:src="@{/js/chat.js}" defer></script>
+    <script th:src="@{/webjars/jquery/3.6.0/dist/jquery.min.js}"></script>
+
 </head>
 <body>
-    <li th:each="room : ${chatList}">
-        <div class="cnt">${room.people}</div>
-        <div class="lastText">${room.message}</div>
-        <div class="textDate">${room.date}</div>
-        <div class="alarm">${room.alarm}</div>
-    </li>
+    <ul th:each="room : ${chatList}">
+        <li class="peopleCnt"></li>
+        <li class="lastText"></li>
+        <li class="textDate"></li>
+        <li class="alarm"></li>
+        <li class="roomName room" th:value="${room.roomId}" th:text="${room.roomName}"></li>
+    </ul>
 </body>
 </html>
