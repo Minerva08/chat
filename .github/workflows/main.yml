@@ -1,28 +1,73 @@
-name: Spring Boot & Gradle CI/CD 
+name: Java CI with Gradle
 
 on:
   push:
     branches: [ "gitAction" ]
-  pull_request:
-    branches: [ "main" ]
-
-permissions:
-  contents: read
+env:
+  S3_BUCKET_NAME: github-action-s3-bucket
 
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: linux-latest
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Set up JDK 11
-      uses: actions/setup-java@v3
-      with:
-        java-version: '11'
-        distribution: 'temurin'
-    - name: Grant execute permission for gradlew
-      run: chmod +x gradlew
-    - name: Build with Gradle
-      run: ./gradlew clean build -x test
+      - uses: actions/checkout@v3
 
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+      - uses: actions/checkout@v2
+      - run: touch ./src/main/resources/application.properties
+      - run: echo "${{secrets.SPRING_PROPERTIES}}" > ./src/main/resources/application.properties
+      - uses: actions/upload-artifact@v2
+        with:
+          name: application.properties
+          path: ./src/main/resources/application.properties
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Build with Gradle
+        run: ./gradlew clean build
+
+      - name: Make Directory
+        run: mkdir -p deploy
+
+      - name: Copy Jar
+        run: cp ./build/libs/*.jar ./deploy
+
+      - name: Copy appspec.yml
+        run: cp appspec.yml ./deploy
+
+      - name: Copy script
+        run: cp ./scripts/*.sh ./deploy
+
+      - name: Make zip file
+        run: zip -r ./prscs.zip ./deploy
+        shell: bash
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
+          aws-region: ap-northeast-2
+
+      - name: Upload to S3
+        run: aws s3 cp --region ap-northeast-2 ./prscs.zip s3://$S3_BUCKET_NAME/
+
+
+      - name: Deploy
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_KEY }}
+          aws-region: ap-northeast-2
+        run:
+          aws deploy create-deployment
+          --application-name prscs-test2
+          --deployment-group-name prscsl-group3
+          --file-exists-behavior OVERWRITE
+          --s3-location bucket=$S3_BUCKET_NAME,bundleType=zip,key=prscs.zip
