@@ -4,6 +4,10 @@ plugins {
     id("io.spring.dependency-management") version "1.0.15.RELEASE"
 }
 
+tasks.named("jar"){
+    enabled=false
+}
+
 group = "com.example"
 version = "0.0.1-SNAPSHOT"
 
@@ -16,6 +20,7 @@ configurations {
         extendsFrom(configurations.annotationProcessor.get())
     }
 }
+
 
 repositories {
     mavenCentral()
