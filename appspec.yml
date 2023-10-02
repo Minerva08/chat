@@ -1,0 +1,22 @@
+version: 0.0
+os: linux
+files:
+  - source: /
+    destination: /home/app/
+    overwrite: yes
+
+  # 권한설정 codedeploy에서 ec2 서버로 넘겨준 파일들 모두 ubuntu 권한을 갖게한다.
+permissions:
+  - object: /
+    pattern: "**"
+    owner: ubuntu
+    group: ubuntu
+
+  #codedeploy 배포단계에서 실행할 명령어 지정
+  #applicationStart 단계에서 deploy.sh를 ubuntu 권한으로 실행
+  #스크립트 실행 60초 이상이면 실패가 된다.(무한정 기다릴 수 없도록 timeout 설정)
+hooks:
+  ApplicationStart:
+    - location: deploy.sh
+      timeout: 60
+      runas: ubuntu
