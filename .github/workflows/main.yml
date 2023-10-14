@@ -67,7 +67,7 @@ jobs:
           aws-region: ap-northeast-2
         run:
           aws deploy create-deployment
-          --application-name prscs-test2
-          --deployment-group-name prscsl-group3
+          --application-name spring-codedeploy
+          --deployment-group-name spring-codedeploy
           --file-exists-behavior OVERWRITE
           --s3-location bucket=$S3_BUCKET_NAME,bundleType=zip,key=prscs.zip
